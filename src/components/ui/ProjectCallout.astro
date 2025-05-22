@@ -1,0 +1,75 @@
+---
+import { Icon } from 'astro-icon';
+
+const projectData = {
+  title: "Introducing 51Eat",
+  subtitle: "Founder's Project",
+  description: "Your Source for Fresh, Local Food in the Capital Region",
+  features: [
+    {
+      icon: "heroicons-outline:search",
+      title: "Find Your Source",
+      description: "Browse nearby butchers, farms, markets, or farm-to-table restaurants."
+    },
+    {
+      icon: "heroicons-outline:bookmark",
+      title: "Reserve Your Favorites",
+      description: "Hold cuts, CSA boxes, or snag a table with a few clicks."
+    },
+    {
+      icon: "heroicons-outline:clock",
+      title: "Experience with Ease",
+      description: "Pick up your goods or dine in—everything's ready when you are."
+    }
+  ],
+  ctaText: "Visit 51Eat",
+  ctaUrl: "https://51eat.co",
+  image: "https://images.pexels.com/photos/8969237/pexels-photo-8969237.jpeg"
+};
+---
+
+<div class="bg-burgundy text-white rounded-2xl overflow-hidden shadow-2xl transform hover:scale-[1.01] transition-transform duration-300">
+  <div class="grid grid-cols-1 lg:grid-cols-2">
+    <div class="p-8 lg:p-12">
+      <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+        <Icon name="heroicons-outline:sparkles" class="w-4 h-4" />
+        <span class="text-sm font-medium">{projectData.subtitle}</span>
+      </div>
+      <h2 class="font-heading text-3xl lg:text-4xl mb-4">{projectData.title}</h2>
+      <p class="text-cream/90 text-lg mb-8 leading-relaxed">
+        {projectData.description}
+      </p>
+      <div class="space-y-6 mb-8">
+        {projectData.features.map(feature => (
+          <div class="flex items-start gap-4">
+            <div class="bg-white/10 rounded-full p-2">
+              <Icon name={feature.icon} class="w-5 h-5" />
+            </div>
+            <div>
+              <h3 class="font-heading text-xl mb-1">{feature.title}</h3>
+              <p class="text-cream/80">{feature.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <a 
+        href={projectData.ctaUrl} 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="inline-flex items-center bg-white text-burgundy px-6 py-3 rounded-lg hover:bg-cream transition-colors font-medium"
+      >
+        {projectData.ctaText}
+        <Icon name="heroicons-outline:external-link" class="w-5 h-5 ml-2" />
+      </a>
+    </div>
+    <div class="relative lg:h-full">
+      <img 
+        src={projectData.image} 
+        alt={projectData.title} 
+        class="w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-r from-burgundy/80 via-burgundy/20 to-transparent lg:block hidden"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-burgundy via-burgundy/20 to-transparent lg:hidden"></div>
+    </div>
+  </div>
+</div>

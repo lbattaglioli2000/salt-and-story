@@ -1,0 +1,47 @@
+---
+import { Icon } from 'astro-icon';
+---
+
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-4">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="font-heading text-3xl text-burgundy mb-6">Elevate Your Culinary Skills</h2>
+      <p class="text-lg text-olive-dark mb-8">
+        Discover techniques, tips, and insights to transform your cooking from ordinary to extraordinary. 
+        From knife skills to flavor pairing, explore our educational content.
+      </p>
+      <a 
+        href="/techniques" 
+        class="inline-block bg-burgundy hover:bg-burgundy-light text-white py-3 px-8 rounded-md transition-colors font-medium"
+      >
+        Explore Techniques
+      </a>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+      <div class="bg-cream p-6 rounded-lg shadow-sm text-center">
+        <div class="w-16 h-16 bg-burgundy/10 rounded-full flex items-center justify-center mx-auto mb-4">
+          <Icon name="heroicons-outline:academic-cap" class="w-8 h-8 text-burgundy" />
+        </div>
+        <h3 class="font-heading text-xl mb-2">Culinary Fundamentals</h3>
+        <p class="text-olive-dark">Master the essential techniques that form the foundation of French cooking.</p>
+      </div>
+      
+      <div class="bg-cream p-6 rounded-lg shadow-sm text-center">
+        <div class="w-16 h-16 bg-burgundy/10 rounded-full flex items-center justify-center mx-auto mb-4">
+          <Icon name="heroicons-outline:fire" class="w-8 h-8 text-burgundy" />
+        </div>
+        <h3 class="font-heading text-xl mb-2">Cooking Methods</h3>
+        <p class="text-olive-dark">Learn different cooking techniques from braising to sous vide and when to use them.</p>
+      </div>
+      
+      <div class="bg-cream p-6 rounded-lg shadow-sm text-center">
+        <div class="w-16 h-16 bg-burgundy/10 rounded-full flex items-center justify-center mx-auto mb-4">
+          <Icon name="heroicons-outline:beaker" class="w-8 h-8 text-burgundy" />
+        </div>
+        <h3 class="font-heading text-xl mb-2">Flavor Science</h3>
+        <p class="text-olive-dark">Discover the science behind flavor combinations and how to balance tastes perfectly.</p>
+      </div>
+    </div>
+  </div>
+</section> 

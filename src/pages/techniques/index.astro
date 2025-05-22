@@ -1,0 +1,181 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Icon } from 'astro-icon';
+
+// Sample data - in a real app, this would come from a CMS or API
+const techniques = [
+  {
+    title: "Mastering the Art of French Sauces",
+    description: "Learn the fundamentals of classic French mother sauces and their derivatives, from béchamel to hollandaise.",
+    image: "https://images.pexels.com/photos/6287525/pexels-photo-6287525.jpeg",
+    slug: "french-sauces",
+    level: "Intermediate",
+    duration: "45 min"
+  },
+  {
+    title: "Perfect Knife Skills",
+    description: "Discover proper knife handling techniques, from basic cuts to advanced julienne and brunoise.",
+    image: "https://images.pexels.com/photos/4259140/pexels-photo-4259140.jpeg",
+    slug: "knife-skills",
+    level: "Beginner",
+    duration: "30 min"
+  },
+  {
+    title: "The Science of Soufflé",
+    description: "Unravel the secrets to creating perfect, airy soufflés every time with proper technique and timing.",
+    image: "https://images.pexels.com/photos/6824477/pexels-photo-6824477.jpeg",
+    slug: "souffle-science",
+    level: "Advanced",
+    duration: "40 min"
+  },
+  {
+    title: "Bread Baking Fundamentals",
+    description: "Master the essential techniques for creating artisanal bread with perfect crust and crumb.",
+    image: "https://images.pexels.com/photos/1756061/pexels-photo-1756061.jpeg",
+    slug: "bread-fundamentals",
+    level: "Intermediate",
+    duration: "60 min"
+  },
+  {
+    title: "Perfect Poaching",
+    description: "Learn the gentle art of poaching for delicate proteins like eggs, fish, and chicken.",
+    image: "https://images.pexels.com/photos/4611424/pexels-photo-4611424.jpeg",
+    slug: "poaching-technique",
+    level: "Beginner",
+    duration: "25 min"
+  },
+  {
+    title: "Mastering Pâte Feuilletée (Puff Pastry)",
+    description: "Create beautiful, flaky puff pastry from scratch using traditional French lamination techniques.",
+    image: "https://images.pexels.com/photos/6605308/pexels-photo-6605308.jpeg",
+    slug: "puff-pastry",
+    level: "Advanced",
+    duration: "90 min"
+  }
+];
+
+const levels = ["All", "Beginner", "Intermediate", "Advanced"];
+---
+
+<Layout title="Techniques" description="Master essential culinary techniques from knife skills to French mother sauces. Elevate your cooking with our expert guides.">
+  <div class="bg-olive-light/20 py-12">
+    <div class="container mx-auto px-4">
+      <h1 class="font-heading text-4xl text-burgundy mb-4">Culinary Techniques</h1>
+      <p class="text-olive-dark max-w-2xl">
+        Master the fundamental methods and skills that will elevate your cooking from good to exceptional.
+      </p>
+    </div>
+  </div>
+  
+  <div class="container mx-auto px-4 py-8">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
+      <!-- Filter by Level -->
+      <div class="flex flex-wrap gap-2">
+        {levels.map((level) => (
+          <button class={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${level === 'All' ? 'bg-burgundy text-white' : 'bg-tan text-olive-dark hover:bg-burgundy/10'}`}>
+            {level}
+          </button>
+        ))}
+      </div>
+      
+      <!-- Search -->
+      <div class="relative w-full md:w-64">
+        <input 
+          type="text" 
+          placeholder="Search techniques..." 
+          class="w-full p-2 pl-10 border border-tan rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-burgundy"
+        />
+        <Icon name="heroicons-outline:search" class="absolute left-3 top-2.5 w-5 h-5 text-olive" />
+      </div>
+    </div>
+    
+    <!-- Techniques Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+      {techniques.map((technique) => (
+        <article class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 animate-fade-in">
+          <a href={`/techniques/${technique.slug}`} class="block">
+            <div class="relative h-48 overflow-hidden">
+              <img 
+                src={technique.image} 
+                alt={technique.title} 
+                class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+              />
+              <div class="absolute top-2 right-2">
+                <span class={`text-xs px-2 py-1 rounded-full font-medium ${
+                  technique.level === 'Beginner' ? 'bg-sage text-olive-dark' : 
+                  technique.level === 'Intermediate' ? 'bg-chestnut text-white' : 
+                  'bg-burgundy text-white'
+                }`}>
+                  {technique.level}
+                </span>
+              </div>
+            </div>
+            <div class="p-5">
+              <h3 class="font-heading text-xl text-burgundy mb-2">{technique.title}</h3>
+              <p class="text-olive-dark mb-4">{technique.description}</p>
+              <div class="flex items-center text-sm text-olive">
+                <Icon name="heroicons-outline:clock" class="w-4 h-4 mr-1" />
+                <span>{technique.duration}</span>
+              </div>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+    
+    <!-- Pagination -->
+    <div class="flex justify-center mt-8">
+      <nav class="inline-flex rounded-md shadow-sm" aria-label="Pagination">
+        <a
+          href="#"
+          class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-tan bg-white text-sm font-medium text-olive hover:bg-tan"
+        >
+          <span class="sr-only">Previous</span>
+          <Icon name="heroicons-outline:chevron-left" class="h-5 w-5" />
+        </a>
+        <a
+          href="#"
+          aria-current="page"
+          class="relative inline-flex items-center px-4 py-2 border border-tan bg-burgundy text-sm font-medium text-white"
+        >
+          1
+        </a>
+        <a
+          href="#"
+          class="relative inline-flex items-center px-4 py-2 border border-tan bg-white text-sm font-medium text-olive hover:bg-tan"
+        >
+          2
+        </a>
+        <a
+          href="#"
+          class="relative hidden md:inline-flex items-center px-4 py-2 border border-tan bg-white text-sm font-medium text-olive hover:bg-tan"
+        >
+          3
+        </a>
+        <a
+          href="#"
+          class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-tan bg-white text-sm font-medium text-olive hover:bg-tan"
+        >
+          <span class="sr-only">Next</span>
+          <Icon name="heroicons-outline:chevron-right" class="h-5 w-5" />
+        </a>
+      </nav>
+    </div>
+  </div>
+  
+  <!-- CTA Section -->
+  <section class="bg-burgundy text-white py-16 mt-16">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="font-heading text-3xl mb-4">Ready to Take Your Skills to the Next Level?</h2>
+      <p class="max-w-2xl mx-auto mb-8 text-cream/90">
+        Join our monthly online workshops where we dive deep into advanced techniques with live demonstrations and Q&A sessions.
+      </p>
+      <a 
+        href="/contact" 
+        class="inline-block bg-cream text-burgundy hover:bg-tan transition-colors py-3 px-8 rounded-md font-medium"
+      >
+        Learn More About Workshops
+      </a>
+    </div>
+  </section>
+</Layout>

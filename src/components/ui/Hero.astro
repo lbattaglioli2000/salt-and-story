@@ -1,0 +1,77 @@
+---
+import { Icon } from 'astro-icon';
+---
+
+<section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
+  <!-- Background image with overlay -->
+  <div class="absolute inset-0 z-0">
+    <!-- Lighter, multi-layered overlay for better text contrast -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60 z-10"></div>
+    <div class="absolute inset-0 bg-black/30 z-[5]"></div>
+    <img 
+      src="https://images.pexels.com/photos/1435895/pexels-photo-1435895.jpeg" 
+      alt="Elegant dining scene with fresh ingredients" 
+      class="w-full h-full object-cover scale-110 animate-subtle-zoom"
+    />
+  </div>
+  
+  <!-- Content -->
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="max-w-4xl mx-auto">
+      <!-- Decorative elements -->
+      <div class="flex items-center justify-center gap-4 mb-8 animate-fade-in">
+        <div class="h-px w-12 bg-white"></div>
+        <span class="text-white font-medium tracking-wider uppercase text-sm">Welcome to</span>
+        <div class="h-px w-12 bg-white"></div>
+      </div>
+
+      <div class="text-center">
+        <h1 class="font-heading text-5xl md:text-7xl text-white mb-6 animate-slide-up drop-shadow-[0_4px_3px_rgba(0,0,0,0.3)]">
+          Salt & Story
+        </h1>
+        <p class="text-xl md:text-2xl text-white max-w-2xl mx-auto mb-12 leading-relaxed animate-fade-in drop-shadow-[0_2px_2px_rgba(0,0,0,0.2)]">
+          Where every dish carries a memory, and every recipe tells a tale. Join us in celebrating the flavors that bring us together.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in">
+          <a 
+            href="/recipes" 
+            class="w-full sm:w-auto bg-burgundy hover:bg-burgundy-light text-white py-4 px-8 rounded-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl shadow-lg"
+          >
+            <span class="relative flex items-center justify-center gap-2 text-lg font-medium">
+              Explore Recipes
+              <Icon name="heroicons-outline:arrow-right" class="w-5 h-5" />
+            </span>
+          </a>
+          <a 
+            href="/techniques" 
+            class="w-full sm:w-auto bg-white hover:bg-cream text-burgundy py-4 px-8 rounded-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl shadow-lg"
+          >
+            <span class="flex items-center justify-center gap-2 text-lg font-medium">
+              Master Techniques
+              <Icon name="heroicons-outline:academic-cap" class="w-5 h-5" />
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+    <a href="#featured" aria-label="Scroll down" class="text-white hover:text-cream transition-colors">
+      <Icon name="heroicons-outline:chevron-down" class="w-8 h-8" />
+    </a>
+  </div>
+</section>
+
+<style>
+  @keyframes subtle-zoom {
+    from { transform: scale(1.1); }
+    to { transform: scale(1.15); }
+  }
+
+  .animate-subtle-zoom {
+    animation: subtle-zoom 20s ease-in-out infinite alternate;
+  }
+</style>

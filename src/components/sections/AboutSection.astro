@@ -1,0 +1,66 @@
+---
+import { Icon } from 'astro-icon';
+---
+
+<section class="py-24 bg-cream">
+  <div class="container mx-auto px-4">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-12 gap-12 items-center">
+        <!-- Content -->
+        <div class="col-span-12 lg:col-span-8 order-2 lg:order-1">
+          <div class="max-w-2xl">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="h-px w-12 bg-burgundy/30"></div>
+              <span class="text-burgundy font-medium tracking-wider uppercase text-sm">About Me</span>
+            </div>
+            
+            <h2 class="font-heading text-4xl text-burgundy mb-8">Blending Technology & Culinary Arts</h2>
+            
+            <div class="space-y-6 text-olive-dark">
+              <p>
+                By day, I'm a software developer crafting digital experiences. But when I step away from the keyboard, you'll find me in the kitchen, experimenting with flavors and techniques from around the world.
+              </p>
+              <p>
+                Growing up in an Italian family, food was always at the heart of our gatherings. Those early experiences sparked a lifelong passion for cooking that has grown alongside my tech career. While I may not be a professionally trained chef, my approach to cooking mirrors my approach to coding: it's all about understanding the fundamentals, being precise with techniques, and not being afraid to experiment.
+              </p>
+            </div>
+            
+            <div class="mt-8 flex flex-wrap gap-4">
+              <div class="flex items-center gap-3 text-olive">
+                <div class="w-10 h-10 rounded-full bg-burgundy/10 flex items-center justify-center">
+                  <Icon name="heroicons-outline:code" class="w-5 h-5 text-burgundy" />
+                </div>
+                <div>
+                  <div class="font-medium">Tech Background</div>
+                  <div class="text-sm">Full Stack Developer</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 text-olive">
+                <div class="w-10 h-10 rounded-full bg-burgundy/10 flex items-center justify-center">
+                  <Icon name="heroicons-outline:heart" class="w-5 h-5 text-burgundy" />
+                </div>
+                <div>
+                  <div class="font-medium">Culinary Focus</div>
+                  <div class="text-sm">Italian & French Cuisine</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Image -->
+        <div class="col-span-12 lg:col-span-4 order-1 lg:order-2">
+          <div class="relative">
+            <div class="aspect-square rounded-2xl overflow-hidden shadow-xl">
+              <img 
+                src="https://images.pexels.com/photos/3814446/pexels-photo-3814446.jpeg" 
+                alt="Luigi in the kitchen" 
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> 

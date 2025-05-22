@@ -1,0 +1,63 @@
+---
+export interface Props {
+  type: 'horizontal' | 'sidebar' | 'in-content';
+  className?: string;
+}
+
+const { type, className = '' } = Astro.props;
+
+const adSizes = {
+  horizontal: { width: '728px', height: '90px' },
+  sidebar: { width: '300px', height: '250px' },
+  'in-content': { width: '728px', height: '90px' }
+};
+---
+
+<div class={`ad-container ${type} ${className}`}>
+  <ins
+    class="adsbygoogle"
+    style={`display: block; ${type !== 'in-content' ? `width: ${adSizes[type].width}; height: ${adSizes[type].height};` : ''}`}
+    data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+    data-ad-slot="YOUR_AD_SLOT_ID"
+    data-ad-format="auto"
+    data-full-width-responsive="true"
+  ></ins>
+</div>
+
+<style>
+  .ad-container {
+    @apply relative mx-auto text-center;
+  }
+
+  .ad-container::before {
+    content: 'Advertisement';
+    @apply block text-xs text-olive/60 mb-2;
+  }
+
+  .horizontal {
+    max-width: 728px;
+    min-height: 90px;
+  }
+
+  .sidebar {
+    max-width: 300px;
+    min-height: 250px;
+  }
+
+  .in-content {
+    @apply my-8;
+    min-height: 90px;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .horizontal, .in-content {
+      max-width: 100%;
+      overflow: hidden;
+    }
+  }
+</style>
+
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+</script>

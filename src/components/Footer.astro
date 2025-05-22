@@ -1,0 +1,74 @@
+---
+import { Icon } from 'astro-icon';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-olive text-cream pt-12 pb-6 mt-16">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <div>
+        <h3 class="font-heading text-xl mb-4">Salt & Story</h3>
+        <p class="mb-4">Exploring the art of cooking with passion and creativity. Join me on this delicious journey.</p>
+        <div class="flex space-x-4">
+          <a href="#" aria-label="Instagram" class="text-cream hover:text-tan transition-colors">
+            <Icon name="mdi:instagram" class="w-6 h-6" />
+          </a>
+          <a href="#" aria-label="Pinterest" class="text-cream hover:text-tan transition-colors">
+            <Icon name="mdi:pinterest" class="w-6 h-6" />
+          </a>
+          <a href="#" aria-label="YouTube" class="text-cream hover:text-tan transition-colors">
+            <Icon name="mdi:youtube" class="w-6 h-6" />
+          </a>
+        </div>
+      </div>
+      
+      <div>
+        <h3 class="font-heading text-xl mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="/" class="hover:text-tan transition-colors">Home</a></li>
+          <li><a href="/recipes" class="hover:text-tan transition-colors">Recipes</a></li>
+          <li><a href="/techniques" class="hover:text-tan transition-colors">Techniques</a></li>
+          <li><a href="/about" class="hover:text-tan transition-colors">About</a></li>
+          <li><a href="/contact" class="hover:text-tan transition-colors">Contact</a></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h3 class="font-heading text-xl mb-4">Recipe Categories</h3>
+        <ul class="space-y-2">
+          <li><a href="/recipes/category/french" class="hover:text-tan transition-colors">French Cuisine</a></li>
+          <li><a href="/recipes/category/italian" class="hover:text-tan transition-colors">Italian Classics</a></li>
+          <li><a href="/recipes/category/desserts" class="hover:text-tan transition-colors">Desserts</a></li>
+          <li><a href="/recipes/category/breakfast" class="hover:text-tan transition-colors">Breakfast</a></li>
+          <li><a href="/recipes/category/seasonal" class="hover:text-tan transition-colors">Seasonal Specials</a></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h3 class="font-heading text-xl mb-4">Subscribe</h3>
+        <p class="mb-4">Get the latest recipes and culinary tips delivered to your inbox.</p>
+        <form class="space-y-2">
+          <div>
+            <input 
+              type="email" 
+              placeholder="Your email address" 
+              class="w-full p-2 rounded-md text-olive bg-cream/90 border border-transparent focus:outline-none focus:ring-1 focus:ring-tan"
+              required
+            />
+          </div>
+          <button 
+            type="submit" 
+            class="bg-burgundy hover:bg-burgundy-light text-cream py-2 px-4 rounded-md transition-colors w-full"
+          >
+            Subscribe
+          </button>
+        </form>
+      </div>
+    </div>
+    
+    <div class="border-t border-olive-light pt-6 text-center text-sm">
+      <p>&copy; {currentYear} Salt & Story. All rights reserved.</p>
+    </div>
+  </div>
+</footer>

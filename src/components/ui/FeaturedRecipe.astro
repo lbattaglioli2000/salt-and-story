@@ -1,0 +1,103 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  image: string;
+  slug: string;
+  cookTime: string;
+  difficulty: string;
+}
+
+const { title, description, image, slug, cookTime, difficulty } = Astro.props;
+---
+
+<article class="relative overflow-hidden bg-white rounded-xl shadow-xl">
+  <div class="grid grid-cols-1 lg:grid-cols-2 min-h-[600px]">
+    <!-- Image Section -->
+    <div class="relative h-[300px] lg:h-full overflow-hidden">
+      <img 
+        src={image} 
+        alt={title} 
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent lg:bg-gradient-to-r"></div>
+      
+      <!-- Mobile Title (shown only on small screens) -->
+      <div class="absolute bottom-0 left-0 right-0 p-6 lg:hidden">
+        <h3 class="font-heading text-2xl text-white mb-2">{title}</h3>
+        <div class="flex items-center gap-4 text-cream/90 text-sm">
+          <span class="flex items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            {cookTime}
+          </span>
+          <span class="flex items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            {difficulty}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Section -->
+    <div class="relative p-8 lg:p-12 flex flex-col justify-center">
+      <!-- Desktop Title (hidden on small screens) -->
+      <div class="hidden lg:block mb-6">
+        <div class="inline-flex items-center rounded-full bg-burgundy/10 px-3 py-1 text-sm text-burgundy mb-4">
+          Featured Recipe
+        </div>
+        <h3 class="font-heading text-3xl text-burgundy mb-2">{title}</h3>
+        <div class="flex items-center gap-4 text-olive">
+          <span class="flex items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            {cookTime}
+          </span>
+          <span class="flex items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            {difficulty}
+          </span>
+        </div>
+      </div>
+
+      <p class="text-olive-dark leading-relaxed mb-8">{description}</p>
+      
+      <div class="grid grid-cols-2 gap-6 mb-8">
+        <div class="bg-cream rounded-lg p-4">
+          <div class="text-burgundy mb-1">Preparation</div>
+          <div class="text-2xl font-heading text-olive-dark">30 min</div>
+        </div>
+        <div class="bg-cream rounded-lg p-4">
+          <div class="text-burgundy mb-1">Cooking</div>
+          <div class="text-2xl font-heading text-olive-dark">1 hour</div>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a 
+          href={`/recipes/${slug}`} 
+          class="flex-1 inline-flex items-center justify-center bg-burgundy hover:bg-burgundy-light text-white px-6 py-3 rounded-lg transition-colors"
+        >
+          View Recipe
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </a>
+        <button 
+          class="flex-1 inline-flex items-center justify-center border-2 border-burgundy text-burgundy hover:bg-burgundy/5 px-6 py-3 rounded-lg transition-colors"
+        >
+          Save for Later
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</article>

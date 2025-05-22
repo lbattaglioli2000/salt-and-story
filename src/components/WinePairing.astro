@@ -1,0 +1,92 @@
+---
+import { Icon } from 'astro-icon';
+
+export interface Props {
+  wine: {
+    name: string;
+    type: string;
+    region: string;
+    description: string;
+    image: string;
+  }
+}
+
+const { wine } = Astro.props;
+---
+
+<div class="grid grid-cols-1 lg:grid-cols-2">
+  <!-- Image Section -->
+  <div class="relative h-[300px] lg:h-full overflow-hidden">
+    <img 
+      src={wine.image} 
+      alt={wine.name} 
+      class="absolute inset-0 w-full h-full object-cover"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent lg:bg-gradient-to-r"></div>
+    <div class="absolute bottom-0 left-0 right-0 p-6 lg:hidden">
+      <div class="space-y-2">
+        <div class="flex items-center gap-2 text-cream/90">
+          <Icon name="heroicons-outline:location-marker" class="w-5 h-5" />
+          <span>{wine.region}</span>
+        </div>
+        <div class="flex items-center gap-2 text-cream/90">
+          <Icon name="heroicons-outline:tag" class="w-5 h-5" />
+          <span>{wine.type}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Section -->
+  <div class="p-8 lg:p-10">
+    <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 text-sm text-cream mb-4">
+      <Icon name="heroicons-outline:sparkles" class="w-4 h-4" />
+      <span>Perfect Pairing</span>
+    </div>
+    
+    <h3 class="font-heading text-2xl text-cream mb-4">{wine.name}</h3>
+    <p class="text-cream/90 leading-relaxed mb-6">{wine.description}</p>
+    
+    <div class="grid grid-cols-2 gap-4 mb-8">
+      <div class="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+        <div class="flex items-center gap-2 text-cream/90 mb-1">
+          <Icon name="heroicons-outline:location-marker" class="w-4 h-4" />
+          <span class="text-sm">Region</span>
+        </div>
+        <div class="text-cream">{wine.region}</div>
+      </div>
+      <div class="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+        <div class="flex items-center gap-2 text-cream/90 mb-1">
+          <Icon name="heroicons-outline:tag" class="w-4 h-4" />
+          <span class="text-sm">Type</span>
+        </div>
+        <div class="text-cream">{wine.type}</div>
+      </div>
+    </div>
+
+    <div class="space-y-4">
+      <div class="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+            <Icon name="heroicons-outline:light-bulb" class="w-4 h-4 text-cream" />
+          </div>
+          <h4 class="text-cream">Serving Tips</h4>
+        </div>
+        <ul class="space-y-2 text-cream/90 text-sm">
+          <li class="flex items-center gap-2">
+            <Icon name="heroicons-outline:check-circle" class="w-4 h-4" />
+            Serve at 16-18°C
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="heroicons-outline:check-circle" class="w-4 h-4" />
+            Decant 30 minutes prior
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="heroicons-outline:check-circle" class="w-4 h-4" />
+            Use large Burgundy glass
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

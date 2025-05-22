@@ -1,0 +1,307 @@
+---
+export interface Props {
+  duration: number;
+  label: string;
+  direction: string;
+}
+
+const { duration, label, direction } = Astro.props;
+---
+
+<div class="timer-widget fixed bg-white/80 backdrop-blur rounded-lg shadow-lg p-3 w-64 hidden cursor-move" data-duration={duration * 60}>
+  <div class="flex items-center gap-2">
+    <div class="flex-grow">
+      <div class="font-mono text-2xl text-burgundy timer-display">00:00</div>
+      <div class="text-xs text-olive-dark line-clamp-1 timer-direction transition-all" data-full-text={direction}>{direction}</div>
+    </div>
+    <div class="flex gap-1">
+      <button class="minimize-timer text-olive hover:text-burgundy transition-colors p-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+        </svg>
+      </button>
+      <button class="close-timer text-olive hover:text-burgundy transition-colors p-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class="controls-wrapper transition-all">
+    <div class="flex gap-1 mt-2">
+      <button class="pause-timer flex-1 bg-burgundy/90 hover:bg-burgundy text-white py-1 rounded text-xs font-medium transition-colors">
+        Pause
+      </button>
+      <button class="reset-timer flex-1 bg-olive/90 hover:bg-olive text-white py-1 rounded text-xs font-medium transition-colors">
+        Reset
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  class Timer {
+    element: HTMLElement;
+    duration: number;
+    remaining: number;
+    interval: number | null;
+    isPaused: boolean;
+    isDragging: boolean;
+    isMinimized: boolean;
+    startX: number;
+    startY: number;
+    initialX: number;
+    initialY: number;
+    wasDragged: boolean;
+
+    constructor(element: HTMLElement) {
+      this.element = element;
+      this.duration = parseInt(element.dataset.duration || '0', 10);
+      this.remaining = this.duration;
+      this.interval = null;
+      this.isPaused = false;
+      this.isDragging = false;
+      this.isMinimized = false;
+      this.startX = 0;
+      this.startY = 0;
+      this.initialX = 0;
+      this.initialY = 0;
+      this.wasDragged = false;
+
+      this.initializeControls();
+      this.initializeDragging();
+      this.start();
+      this.positionTimer();
+    }
+
+    private initializeControls() {
+      const closeBtn = this.element.querySelector('.close-timer');
+      const pauseBtn = this.element.querySelector('.pause-timer');
+      const resetBtn = this.element.querySelector('.reset-timer');
+      const minimizeBtn = this.element.querySelector('.minimize-timer');
+
+      closeBtn?.addEventListener('click', () => this.destroy());
+      pauseBtn?.addEventListener('click', () => this.togglePause());
+      resetBtn?.addEventListener('click', () => this.reset());
+      minimizeBtn?.addEventListener('click', () => this.toggleMinimize());
+    }
+
+    private toggleMinimize() {
+      this.isMinimized = !this.isMinimized;
+      const controlsWrapper = this.element.querySelector('.controls-wrapper');
+      const minimizeBtn = this.element.querySelector('.minimize-timer');
+      const directionEl = this.element.querySelector('.timer-direction');
+
+      if (this.isMinimized) {
+        this.element.classList.add('w-40');
+        controlsWrapper?.classList.add('hidden');
+        if (minimizeBtn) {
+          minimizeBtn.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+            </svg>
+          `;
+        }
+        if (directionEl) {
+          directionEl.classList.add('hidden');
+        }
+      } else {
+        this.element.classList.remove('w-40');
+        controlsWrapper?.classList.remove('hidden');
+        if (minimizeBtn) {
+          minimizeBtn.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+            </svg>
+          `;
+        }
+        if (directionEl) {
+          directionEl.classList.remove('hidden');
+        }
+      }
+
+      if (this.wasDragged) {
+        // Keep the timer at its current position
+        return;
+      }
+      this.repositionTimers();
+    }
+
+    private initializeDragging() {
+      this.element.addEventListener('mousedown', (e) => this.startDragging(e));
+      document.addEventListener('mousemove', (e) => this.drag(e));
+      document.addEventListener('mouseup', () => this.stopDragging());
+    }
+
+    private startDragging(e: MouseEvent) {
+      if ((e.target as HTMLElement).closest('button')) return;
+      
+      this.isDragging = true;
+      this.startX = e.clientX;
+      this.startY = e.clientY;
+      this.initialX = this.element.offsetLeft;
+      this.initialY = this.element.offsetTop;
+      
+      this.element.style.transition = 'none';
+      this.element.style.zIndex = '1000';
+    }
+
+    private drag(e: MouseEvent) {
+      if (!this.isDragging) return;
+
+      e.preventDefault();
+      
+      const dx = e.clientX - this.startX;
+      const dy = e.clientY - this.startY;
+      
+      const newX = this.initialX + dx;
+      const newY = this.initialY + dy;
+      
+      this.element.style.left = `${newX}px`;
+      this.element.style.top = `${newY}px`;
+      this.element.style.right = 'auto';
+      this.element.style.bottom = 'auto';
+      
+      // Mark as dragged if moved more than 5px
+      if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+        this.wasDragged = true;
+      }
+    }
+
+    private stopDragging() {
+      if (!this.isDragging) return;
+      
+      this.isDragging = false;
+      this.element.style.transition = 'transform 0.2s ease';
+      this.element.style.zIndex = '999';
+    }
+
+    private positionTimer() {
+      if (this.wasDragged) return;
+      
+      const timers = document.querySelectorAll('.timer-widget:not(.hidden)');
+      const index = Array.from(timers).indexOf(this.element);
+      const offset = this.isMinimized ? 60 : 100;
+      this.element.style.bottom = `${(index * offset) + 16}px`;
+      this.element.style.right = '16px';
+      this.element.style.top = 'auto';
+      this.element.style.left = 'auto';
+    }
+
+    start() {
+      this.element.classList.remove('hidden');
+      if (!this.interval) {
+        this.interval = setInterval(() => this.tick(), 1000);
+      }
+    }
+
+    private tick() {
+      if (this.isPaused) return;
+
+      this.remaining--;
+      this.updateDisplay();
+
+      if (this.remaining <= 0) {
+        this.complete();
+      }
+    }
+
+    private updateDisplay() {
+      const minutes = Math.floor(this.remaining / 60);
+      const seconds = this.remaining % 60;
+      const display = this.element.querySelector('.timer-display');
+      if (display) {
+        display.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      }
+    }
+
+    togglePause() {
+      this.isPaused = !this.isPaused;
+      const pauseBtn = this.element.querySelector('.pause-timer');
+      if (pauseBtn) {
+        pauseBtn.textContent = this.isPaused ? 'Resume' : 'Pause';
+      }
+    }
+
+    reset() {
+      this.remaining = this.duration;
+      this.isPaused = false;
+      const pauseBtn = this.element.querySelector('.pause-timer');
+      if (pauseBtn) {
+        pauseBtn.textContent = 'Pause';
+      }
+      this.updateDisplay();
+    }
+
+    private complete() {
+      clearInterval(this.interval!);
+      this.interval = null;
+      
+      const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
+      audio.play();
+
+      if (Notification.permission === "granted") {
+        new Notification("Timer Complete!", {
+          body: `${this.element.querySelector('.timer-direction')?.textContent} is done!`,
+          icon: "/favicon.svg"
+        });
+      }
+
+      this.element.classList.add('animate-pulse');
+    }
+
+    destroy() {
+      if (this.interval) {
+        clearInterval(this.interval);
+      }
+      this.element.remove();
+      this.repositionTimers();
+    }
+
+    private repositionTimers() {
+      const timers = document.querySelectorAll('.timer-widget:not(.hidden)');
+      timers.forEach((timer, index) => {
+        const timerInstance = (timer as HTMLElement);
+        // Skip repositioning if the timer was manually dragged
+        if (timerInstance.style.left !== 'auto') return;
+        
+        const isMinimized = timerInstance.classList.contains('w-40');
+        const offset = isMinimized ? 60 : 100;
+        timerInstance.style.bottom = `${(index * offset) + 16}px`;
+        timerInstance.style.right = '16px';
+      });
+    }
+  }
+
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (target.matches('.start-timer')) {
+      const duration = parseInt(target.dataset.duration || '0', 10);
+      const label = target.dataset.label || 'Timer';
+      const direction = target.dataset.direction || '';
+      
+      const template = document.querySelector('#timer-template') as HTMLTemplateElement;
+      if (template) {
+        const clone = template.content.cloneNode(true) as DocumentFragment;
+        const timerElement = clone.querySelector('.timer-widget') as HTMLElement;
+        if (timerElement) {
+          timerElement.dataset.duration = duration.toString();
+          const labelElement = timerElement.querySelector('.timer-label');
+          const directionElement = timerElement.querySelector('.timer-direction');
+          if (labelElement) {
+            labelElement.textContent = label;
+          }
+          if (directionElement) {
+            directionElement.textContent = direction;
+          }
+          document.body.appendChild(timerElement);
+          new Timer(timerElement);
+        }
+      }
+    }
+  });
+
+  if (Notification.permission === "default") {
+    Notification.requestPermission();
+  }
+</script>

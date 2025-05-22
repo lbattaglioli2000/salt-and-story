@@ -1,0 +1,39 @@
+query GetFeaturedRecipe {
+  featuredRecipe {
+    title
+    description
+    image
+    slug
+    cookTime
+    difficulty
+    category {
+      name
+      slug
+    }
+  }
+}
+
+query GetLatestRecipes($limit: Int = 6) {
+  recipes(limit: $limit) {
+    title
+    description
+    image
+    slug
+    cookTime
+    difficulty
+    category {
+      name
+      slug
+    }
+  }
+}
+
+query GetRecipeCategories {
+  categories {
+    name
+    slug
+    description
+    image
+    recipeCount
+  }
+} 

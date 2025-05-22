@@ -1,0 +1,91 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import RecipeCard from '../../../components/RecipeCard.astro';
+import { Icon } from 'astro-icon';
+
+export function getStaticPaths() {
+  // In a real app, this would come from a CMS or database
+  return [
+    {
+      params: { category: 'french' },
+      props: {
+        recipes: [
+          {
+            title: "Coq au Vin",
+            image: "https://images.pexels.com/photos/6107787/pexels-photo-6107787.jpeg",
+            slug: "coq-au-vin",
+            cookTime: "1 hour 30 min",
+            category: "French"
+          },
+          {
+            title: "Beef Bourguignon",
+            image: "https://images.pexels.com/photos/5966141/pexels-photo-5966141.jpeg",
+            slug: "beef-bourguignon",
+            cookTime: "3 hours",
+            category: "French"
+          },
+          {
+            title: "Ratatouille",
+            image: "https://images.pexels.com/photos/2611818/pexels-photo-2611818.jpeg",
+            slug: "ratatouille",
+            cookTime: "1 hour",
+            category: "French"
+          }
+        ],
+        categoryInfo: {
+          title: "French Cuisine",
+          description: "Discover the elegance and sophistication of traditional French cooking, from classic dishes to modern interpretations.",
+          image: "https://images.pexels.com/photos/2156036/pexels-photo-2156036.jpeg"
+        }
+      }
+    }
+  ];
+}
+
+const { recipes, categoryInfo } = Astro.props;
+---
+
+<Layout title={categoryInfo.title} description={categoryInfo.description}>
+  <div class="relative h-[40vh] min-h-[300px]">
+    <img 
+      src={categoryInfo.image}
+      alt={categoryInfo.title}
+      class="w-full h-full object-cover"
+    />
+    <div class="absolute inset-0 bg-black/50"></div>
+    <div class="absolute inset-0 flex items-center">
+      <div class="container mx-auto px-4">
+        <h1 class="font-heading text-4xl md:text-5xl text-white mb-4">{categoryInfo.title}</h1>
+        <p class="text-cream/90 max-w-2xl">{categoryInfo.description}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 py-12">
+    <div class="flex justify-between items-center mb-8">
+      <div>
+        <span class="text-olive">{recipes.length} recipes</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button class="p-2 text-olive hover:text-burgundy transition-colors">
+          <Icon name="heroicons-outline:view-grid" class="w-5 h-5" />
+        </button>
+        <button class="p-2 text-olive hover:text-burgundy transition-colors">
+          <Icon name="heroicons-outline:view-list" class="w-5 h-5" />
+        </button>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {recipes.map((recipe) => (
+        <RecipeCard 
+          title={recipe.title}
+          image={recipe.image}
+          slug={recipe.slug}
+          cookTime={recipe.cookTime}
+          category={recipe.category}
+        />
+      ))}
+    </div>
+  </div>
+</Layout>

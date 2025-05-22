@@ -1,0 +1,164 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import RecipeCard from '../../components/RecipeCard.astro';
+import { Icon } from 'astro-icon';
+
+// Sample data - in a real app, this would come from a CMS or API
+const recipes = [
+  {
+    title: "Coq au Vin with Herbed Mashed Potatoes",
+    image: "https://images.pexels.com/photos/6107787/pexels-photo-6107787.jpeg",
+    slug: "coq-au-vin",
+    cookTime: "1 hour 30 min",
+    category: "French"
+  },
+  {
+    title: "Tarte Tatin with Vanilla Crème Fraîche",
+    image: "https://images.pexels.com/photos/6546031/pexels-photo-6546031.jpeg",
+    slug: "tarte-tatin",
+    cookTime: "45 min",
+    category: "Dessert"
+  },
+  {
+    title: "Pan-Seared Scallops with Lemon Beurre Blanc",
+    image: "https://images.pexels.com/photos/1998920/pexels-photo-1998920.jpeg",
+    slug: "seared-scallops",
+    cookTime: "25 min",
+    category: "Seafood"
+  },
+  {
+    title: "Ratatouille Provençal",
+    image: "https://images.pexels.com/photos/2611818/pexels-photo-2611818.jpeg",
+    slug: "ratatouille",
+    cookTime: "1 hour",
+    category: "Vegetarian"
+  },
+  {
+    title: "Classic French Onion Soup",
+    image: "https://images.pexels.com/photos/539451/pexels-photo-539451.jpeg",
+    slug: "french-onion-soup",
+    cookTime: "1 hour 15 min",
+    category: "Soup"
+  },
+  {
+    title: "Beef Bourguignon",
+    image: "https://images.pexels.com/photos/5966141/pexels-photo-5966141.jpeg",
+    slug: "beef-bourguignon",
+    cookTime: "3 hours",
+    category: "French"
+  },
+  {
+    title: "Chocolate Soufflé",
+    image: "https://images.pexels.com/photos/4686962/pexels-photo-4686962.jpeg",
+    slug: "chocolate-souffle",
+    cookTime: "40 min",
+    category: "Dessert"
+  },
+  {
+    title: "Croque Monsieur",
+    image: "https://images.pexels.com/photos/15564188/pexels-photo-15564188/free-photo-of-a-sandwich-on-a-wooden-board.jpeg",
+    slug: "croque-monsieur",
+    cookTime: "20 min",
+    category: "Breakfast"
+  }
+];
+
+const categories = [
+  "All", "French", "Italian", "Dessert", "Seafood", "Vegetarian", "Soup", "Breakfast"
+];
+---
+
+<Layout title="Recipes" description="Browse our collection of delicious recipes from classic French cuisine to modern interpretations and seasonal specialties.">
+  <div class="bg-olive-light/20 py-12">
+    <div class="container mx-auto px-4">
+      <h1 class="font-heading text-4xl text-burgundy mb-4">Recipes</h1>
+      <p class="text-olive-dark max-w-2xl">
+        Browse our collection of delicious recipes from classic French cuisine to modern interpretations and seasonal specialties.
+      </p>
+    </div>
+  </div>
+  
+  <div class="container mx-auto px-4 py-8">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
+      <!-- Filter and Category Selection -->
+      <div class="flex flex-wrap gap-2">
+        {categories.map((category) => (
+          <button class={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${category === 'All' ? 'bg-burgundy text-white' : 'bg-tan text-olive-dark hover:bg-burgundy/10'}`}>
+            {category}
+          </button>
+        ))}
+      </div>
+      
+      <!-- Search -->
+      <div class="relative w-full md:w-64">
+        <input 
+          type="text" 
+          placeholder="Search recipes..." 
+          class="w-full p-2 pl-10 border border-tan rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-burgundy"
+        />
+        <Icon name="heroicons-outline:search" class="absolute left-3 top-2.5 w-5 h-5 text-olive" />
+      </div>
+    </div>
+    
+    <!-- Recipe Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+      {recipes.map((recipe) => (
+        <RecipeCard 
+          title={recipe.title}
+          image={recipe.image}
+          slug={recipe.slug}
+          cookTime={recipe.cookTime}
+          category={recipe.category}
+        />
+      ))}
+    </div>
+    
+    <!-- Pagination -->
+    <div class="flex justify-center mt-8">
+      <nav class="inline-flex rounded-md shadow-sm" aria-label="Pagination">
+        <a
+          href="#"
+          class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-tan bg-white text-sm font-medium text-olive hover:bg-tan"
+        >
+          <span class="sr-only">Previous</span>
+          <Icon name="heroicons-outline:chevron-left" class="h-5 w-5" />
+        </a>
+        <a
+          href="#"
+          aria-current="page"
+          class="relative inline-flex items-center px-4 py-2 border border-tan bg-burgundy text-sm font-medium text-white"
+        >
+          1
+        </a>
+        <a
+          href="#"
+          class="relative inline-flex items-center px-4 py-2 border border-tan bg-white text-sm font-medium text-olive hover:bg-tan"
+        >
+          2
+        </a>
+        <a
+          href="#"
+          class="relative hidden md:inline-flex items-center px-4 py-2 border border-tan bg-white text-sm font-medium text-olive hover:bg-tan"
+        >
+          3
+        </a>
+        <span class="relative inline-flex items-center px-4 py-2 border border-tan bg-white text-sm font-medium text-gray-700">
+          ...
+        </span>
+        <a
+          href="#"
+          class="relative hidden md:inline-flex items-center px-4 py-2 border border-tan bg-white text-sm font-medium text-olive hover:bg-tan"
+        >
+          8
+        </a>
+        <a
+          href="#"
+          class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-tan bg-white text-sm font-medium text-olive hover:bg-tan"
+        >
+          <span class="sr-only">Next</span>
+          <Icon name="heroicons-outline:chevron-right" class="h-5 w-5" />
+        </a>
+      </nav>
+    </div>
+  </div>
+</Layout>

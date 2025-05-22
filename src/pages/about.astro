@@ -1,0 +1,277 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Newsletter from '../components/Newsletter.astro';
+import ProjectCallout from '../components/ProjectCallout.astro';
+import { Icon } from 'astro-icon';
+
+const projectData = {
+  title: "Introducing 51Eat",
+  subtitle: "Founder's Project",
+  description: "Your Source for Fresh, Local Food in the Capital Region",
+  features: [
+    {
+      icon: "heroicons-outline:search",
+      title: "Find Your Source",
+      description: "Browse nearby butchers, farms, markets, or farm-to-table restaurants."
+    },
+    {
+      icon: "heroicons-outline:bookmark",
+      title: "Reserve Your Favorites",
+      description: "Hold cuts, CSA boxes, or snag a table with a few clicks."
+    },
+    {
+      icon: "heroicons-outline:clock",
+      title: "Experience with Ease",
+      description: "Pick up your goods or dine in—everything's ready when you are."
+    }
+  ],
+  ctaText: "Visit 51Eat",
+  ctaUrl: "https://51eat.com",
+  image: "https://images.pexels.com/photos/8969237/pexels-photo-8969237.jpeg"
+};
+---
+
+<Layout title="About" description="Learn about Luigi and the passion behind The Luigi's Culinary Corner.">
+  <!-- Hero Section -->
+  <section class="relative min-h-[60vh] flex items-center">
+    <!-- Background with parallax effect -->
+    <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60"></div>
+      <img 
+        src="https://images.pexels.com/photos/3338497/pexels-photo-3338497.jpeg"
+        alt="Cooking in a professional kitchen"
+        class="w-full h-full object-cover object-center"
+      />
+    </div>
+
+    <!-- Content -->
+    <div class="container mx-auto px-4 relative z-10 text-white">
+      <div class="max-w-4xl">
+        <!-- Decorative elements -->
+        <div class="flex items-center gap-4 mb-8 animate-fade-in">
+          <div class="h-px w-12 bg-white/60"></div>
+          <span class="text-cream font-medium tracking-wider uppercase text-sm">About</span>
+          <div class="h-px w-12 bg-white/60"></div>
+        </div>
+
+        <h1 class="font-heading text-5xl md:text-6xl mb-6 animate-slide-up">
+          Where Code Meets<br/>Culinary Passion
+        </h1>
+        
+        <div class="prose prose-lg prose-invert">
+          <p class="text-cream/90 text-xl animate-fade-in">
+            As a software developer with a deep love for food, I've created this space to share my culinary adventures and connect with fellow food enthusiasts.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Story Section -->
+  <section class="py-24">
+    <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-12 gap-12 items-center">
+          <!-- Content -->
+          <div class="col-span-12 lg:col-span-8 order-2 lg:order-1">
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-4 mb-6">
+                <div class="h-px w-12 bg-burgundy/30"></div>
+                <span class="text-burgundy font-medium tracking-wider uppercase text-sm">My Story</span>
+              </div>
+              
+              <h2 class="font-heading text-4xl text-burgundy mb-8">Blending Technology & Culinary Arts</h2>
+              
+              <div class="space-y-6 text-olive-dark">
+                <p>
+                  By day, I'm a software developer crafting digital experiences. But when I step away from the keyboard, you'll find me in the kitchen, experimenting with flavors and techniques from around the world.
+                </p>
+                <p>
+                  Growing up in an Italian family, food was always at the heart of our gatherings. Those early experiences sparked a lifelong passion for cooking that has grown alongside my tech career. While I may not be a professionally trained chef, my approach to cooking mirrors my approach to coding: it's all about understanding the fundamentals, being precise with techniques, and not being afraid to experiment.
+                </p>
+                <p>
+                  Through this blog, I aim to share my culinary adventures and discoveries, proving that you don't need professional training to create amazing food—just passion, curiosity, and a willingness to learn.
+                </p>
+              </div>
+              
+              <div class="mt-8 flex flex-wrap gap-4">
+                <div class="flex items-center gap-3 text-olive">
+                  <div class="w-10 h-10 rounded-full bg-burgundy/10 flex items-center justify-center">
+                    <Icon name="heroicons-outline:code" class="w-5 h-5 text-burgundy" />
+                  </div>
+                  <div>
+                    <div class="font-medium">Tech Background</div>
+                    <div class="text-sm">Full Stack Developer</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3 text-olive">
+                  <div class="w-10 h-10 rounded-full bg-burgundy/10 flex items-center justify-center">
+                    <Icon name="heroicons-outline:heart" class="w-5 h-5 text-burgundy" />
+                  </div>
+                  <div>
+                    <div class="font-medium">Culinary Focus</div>
+                    <div class="text-sm">Italian & French Cuisine</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Image -->
+          <div class="col-span-12 lg:col-span-4 order-1 lg:order-2">
+            <div class="relative">
+              <div class="aspect-square rounded-2xl overflow-hidden shadow-xl">
+                <img 
+                  src="https://images.pexels.com/photos/3814446/pexels-photo-3814446.jpeg" 
+                  alt="Luigi in the kitchen" 
+                  class="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Philosophy Section -->
+  <div class="container mx-auto px-4 mb-16">
+    <div class="text-center mb-12">
+      <h2 class="font-heading text-4xl text-burgundy mb-4">My Philosophy</h2>
+      <div class="w-24 h-1 bg-burgundy/20 mx-auto mb-6"></div>
+      <p class="text-lg text-olive-dark max-w-3xl mx-auto">
+        My approach to cooking mirrors my software development principles: attention to detail, 
+        continuous learning, and sharing knowledge with the community.
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-white rounded-xl p-8 shadow-lg transform hover:-translate-y-1 transition-all duration-300">
+        <div class="w-16 h-16 bg-burgundy/10 rounded-full flex items-center justify-center mx-auto mb-6">
+          <Icon name="heroicons-outline:sparkles" class="w-8 h-8 text-burgundy" />
+        </div>
+        <h3 class="font-heading text-2xl text-burgundy text-center mb-4">Learn by Doing</h3>
+        <p class="text-olive-dark text-center mb-6">
+          Just like in coding, the best way to learn cooking is through hands-on experience. Embrace the process of trial and error.
+        </p>
+        <ul class="space-y-3 text-olive">
+          <li class="flex items-center gap-2">
+            <Icon name="heroicons-outline:check-circle" class="w-5 h-5 text-burgundy flex-shrink-0" />
+            <span>Practice key techniques</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="heroicons-outline:check-circle" class="w-5 h-5 text-burgundy flex-shrink-0" />
+            <span>Document your progress</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="heroicons-outline:check-circle" class="w-5 h-5 text-burgundy flex-shrink-0" />
+            <span>Learn from mistakes</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="bg-white rounded-xl p-8 shadow-lg transform hover:-translate-y-1 transition-all duration-300">
+        <div class="w-16 h-16 bg-burgundy/10 rounded-full flex items-center justify-center mx-auto mb-6">
+          <Icon name="heroicons-outline:light-bulb" class="w-8 h-8 text-burgundy" />
+        </div>
+        <h3 class="font-heading text-2xl text-burgundy text-center mb-4">Stay Curious</h3>
+        <p class="text-olive-dark text-center mb-6">
+          Whether it's a new programming language or cooking technique, curiosity drives innovation and growth.
+        </p>
+        <ul class="space-y-3 text-olive">
+          <li class="flex items-center gap-2">
+            <Icon name="heroicons-outline:check-circle" class="w-5 h-5 text-burgundy flex-shrink-0" />
+            <span>Explore new flavors</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="heroicons-outline:check-circle" class="w-5 h-5 text-burgundy flex-shrink-0" />
+            <span>Question traditions</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="heroicons-outline:check-circle" class="w-5 h-5 text-burgundy flex-shrink-0" />
+            <span>Embrace challenges</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="bg-white rounded-xl p-8 shadow-lg transform hover:-translate-y-1 transition-all duration-300">
+        <div class="w-16 h-16 bg-burgundy/10 rounded-full flex items-center justify-center mx-auto mb-6">
+          <Icon name="heroicons-outline:share" class="w-8 h-8 text-burgundy" />
+        </div>
+        <h3 class="font-heading text-2xl text-burgundy text-center mb-4">Share Knowledge</h3>
+        <p class="text-olive-dark text-center mb-6">
+          Like open-source software, sharing culinary knowledge enriches the community and helps others grow.
+        </p>
+        <ul class="space-y-3 text-olive">
+          <li class="flex items-center gap-2">
+            <Icon name="heroicons-outline:check-circle" class="w-5 h-5 text-burgundy flex-shrink-0" />
+            <span>Document recipes</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="heroicons-outline:check-circle" class="w-5 h-5 text-burgundy flex-shrink-0" />
+            <span>Share discoveries</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="heroicons-outline:check-circle" class="w-5 h-5 text-burgundy flex-shrink-0" />
+            <span>Build community</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Supporting Local Food Systems Section -->
+  <div class="bg-cream py-16">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto text-center mb-12">
+        <h2 class="font-heading text-3xl text-burgundy mb-6">Supporting Local Food Systems</h2>
+        <p class="text-lg text-olive-dark">
+          My passion for quality ingredients and sustainable food systems extends beyond the kitchen. I believe in building stronger connections between local producers and food enthusiasts, which led me to create a platform that makes it easier for people to discover and support local food producers.
+        </p>
+      </div>
+
+      <!-- 51Eat Callout Section -->
+      <div class="max-w-5xl mx-auto">
+        <ProjectCallout {...projectData} />
+      </div>
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 mb-16">
+    <div class="bg-cream p-8 rounded-lg shadow-sm animate-fade-in">
+      <h2 class="font-heading text-2xl text-burgundy mb-6 text-center">FAQ</h2>
+      
+      <div class="space-y-6 max-w-3xl mx-auto">
+        <div>
+          <h3 class="font-heading text-lg text-olive-dark mb-2">What inspired you to start this food blog?</h3>
+          <p class="text-olive">
+            As a software developer who loves to cook, I wanted to create a space where I could share my culinary experiments and discoveries. This blog combines my technical expertise with my passion for food.
+          </p>
+        </div>
+        
+        <div>
+          <h3 class="font-heading text-lg text-olive-dark mb-2">Are you a trained chef?</h3>
+          <p class="text-olive">
+            No, I'm actually a software developer by trade! My culinary knowledge comes from years of self-study, experimentation, and a genuine love for cooking.
+          </p>
+        </div>
+        
+        <div>
+          <h3 class="font-heading text-lg text-olive-dark mb-2">How can I suggest a recipe or technique to be covered?</h3>
+          <p class="text-olive">
+            I love hearing from fellow food enthusiasts! Feel free to reach out through the contact form with your suggestions and ideas for future content.
+          </p>
+        </div>
+        
+        <div>
+          <h3 class="font-heading text-lg text-olive-dark mb-2">What's your favorite cuisine to cook?</h3>
+          <p class="text-olive">
+            While Italian cuisine holds a special place in my heart, I've developed a deep appreciation for French cooking. I love how both cuisines emphasize quality ingredients and time-honored techniques.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <Newsletter />
+</Layout>

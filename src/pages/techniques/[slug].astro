@@ -1,0 +1,265 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Icon } from 'astro-icon';
+import Newsletter from '../../components/ui/Newsletter.astro';
+import Timer from '../../components/Timer.astro';
+
+export function getStaticPaths() {
+  return [
+    {
+      params: { slug: 'french-sauces' },
+      props: {
+        technique: {
+          title: "Mastering the Art of French Sauces",
+          description: "Learn the fundamentals of classic French mother sauces and their derivatives, from béchamel to hollandaise.",
+          image: "https://images.pexels.com/photos/6287525/pexels-photo-6287525.jpeg",
+          level: "Intermediate",
+          duration: "45 min",
+          prerequisites: [
+            "Basic knife skills",
+            "Understanding of heat control",
+            "Familiarity with kitchen equipment"
+          ],
+          equipment: [
+            {
+              name: "Heavy-bottomed saucepan",
+              description: "For even heat distribution"
+            },
+            {
+              name: "Whisk",
+              description: "For smooth sauce consistency"
+            },
+            {
+              name: "Wooden spoon",
+              description: "For stirring and scraping"
+            }
+          ],
+          steps: [
+            {
+              title: "Making a Roux",
+              content: "A roux is the foundation of many French sauces. It's made by cooking equal parts flour and butter until the raw flour taste is gone.",
+              duration: 5,
+              tips: [
+                "Use medium heat to prevent burning",
+                "Stir constantly for even cooking",
+                "The color will indicate the flavor intensity"
+              ],
+              image: "https://images.pexels.com/photos/6287277/pexels-photo-6287277.jpeg"
+            },
+            {
+              title: "Béchamel Sauce",
+              content: "Starting with a white roux, gradually whisk in warm milk to create a smooth, creamy sauce.",
+              duration: 15,
+              tips: [
+                "Warm the milk before adding",
+                "Add milk gradually to prevent lumps",
+                "Season with nutmeg at the end"
+              ],
+              image: "https://images.pexels.com/photos/6287287/pexels-photo-6287287.jpeg"
+            },
+            {
+              title: "Hollandaise Sauce",
+              content: "An emulsion of egg yolks, melted butter, and lemon juice, whisked over gentle heat.",
+              duration: 10,
+              tips: [
+                "Use a double boiler",
+                "Whisk constantly",
+                "Watch temperature to prevent curdling"
+              ],
+              image: "https://images.pexels.com/photos/6287299/pexels-photo-6287299.jpeg"
+            }
+          ],
+          commonMistakes: [
+            {
+              title: "Lumpy Sauce",
+              solution: "Whisk continuously and add liquid gradually"
+            },
+            {
+              title: "Broken Sauce",
+              solution: "Control heat carefully and whisk consistently"
+            },
+            {
+              title: "Bland Flavor",
+              solution: "Season properly and taste throughout cooking"
+            }
+          ],
+          variations: [
+            {
+              name: "Mornay Sauce",
+              description: "Béchamel with added Gruyère cheese",
+              difficulty: "Easy"
+            },
+            {
+              name: "Béarnaise Sauce",
+              description: "Hollandaise with tarragon and shallots",
+              difficulty: "Advanced"
+            }
+          ]
+        }
+      }
+    }
+  ];
+}
+
+const { technique } = Astro.props;
+---
+
+<Layout title={technique.title} description={technique.description}>
+  <!-- Hero Section -->
+  <div class="container mx-auto px-4 py-10">
+    <div class="relative h-[50vh] min-h-[400px] overflow-hidden rounded-2xl shadow-xl">
+      <img 
+        src={technique.image} 
+        alt={technique.title} 
+        class="w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+      <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+        <div class="flex flex-wrap gap-4 mb-4">
+          <span class="bg-burgundy/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm flex items-center gap-1">
+            <Icon name="heroicons-outline:academic-cap" class="w-4 h-4" />
+            {technique.level}
+          </span>
+          <span class="bg-cream/90 backdrop-blur-sm text-burgundy px-3 py-1 rounded-full text-sm flex items-center gap-1">
+            <Icon name="heroicons-outline:clock" class="w-4 h-4" />
+            {technique.duration}
+          </span>
+        </div>
+        <h1 class="font-heading text-4xl md:text-5xl mb-4">{technique.title}</h1>
+        <p class="text-cream/90 max-w-2xl text-lg">{technique.description}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <!-- Sidebar -->
+      <div class="lg:col-span-1 space-y-8">
+        <!-- Prerequisites -->
+        <div class="bg-cream rounded-xl p-6 shadow-sm">
+          <h2 class="font-heading text-2xl text-burgundy mb-4">Prerequisites</h2>
+          <ul class="space-y-3">
+            {technique.prerequisites.map(prereq => (
+              <li class="flex items-center gap-2 text-olive-dark">
+                <Icon name="heroicons-outline:check-circle" class="w-5 h-5 text-burgundy flex-shrink-0" />
+                <span>{prereq}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Equipment -->
+        <div class="bg-cream rounded-xl p-6 shadow-sm">
+          <h2 class="font-heading text-2xl text-burgundy mb-4">Equipment Needed</h2>
+          <ul class="space-y-4">
+            {technique.equipment.map(item => (
+              <li class="text-olive-dark">
+                <div class="font-medium mb-1">{item.name}</div>
+                <div class="text-sm text-olive">{item.description}</div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div class="bg-burgundy text-white rounded-xl p-6 shadow-sm">
+          <h2 class="font-heading text-2xl mb-4">Common Mistakes</h2>
+          <div class="space-y-4">
+            {technique.commonMistakes.map(mistake => (
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <Icon name="heroicons-outline:exclamation-circle" class="w-5 h-5 text-cream flex-shrink-0" />
+                  <span class="font-medium">{mistake.title}</span>
+                </div>
+                <p class="text-cream/90 text-sm pl-7">{mistake.solution}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="lg:col-span-2">
+        <div class="space-y-12">
+          {technique.steps.map((step, index) => (
+            <div class="bg-white rounded-xl overflow-hidden shadow-sm">
+              <div class="aspect-video relative">
+                <img 
+                  src={step.image} 
+                  alt={step.title}
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div class="p-6">
+                <div class="flex items-center gap-4 mb-4">
+                  <span class="w-8 h-8 bg-burgundy text-white rounded-full flex items-center justify-center font-medium">
+                    {index + 1}
+                  </span>
+                  <h3 class="font-heading text-2xl text-burgundy">{step.title}</h3>
+                </div>
+                
+                <p class="text-olive-dark mb-6">{step.content}</p>
+                
+                <div class="bg-cream rounded-lg p-4 mb-6">
+                  <div class="flex items-center gap-2 text-burgundy mb-2">
+                    <Icon name="heroicons-outline:light-bulb" class="w-5 h-5" />
+                    <span class="font-medium">Pro Tips</span>
+                  </div>
+                  <ul class="space-y-2">
+                    {step.tips.map(tip => (
+                      <li class="flex items-start gap-2 text-olive-dark text-sm">
+                        <Icon name="heroicons-outline:check" class="w-4 h-4 text-burgundy flex-shrink-0 mt-0.5" />
+                        <span>{tip}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {step.duration && (
+                  <button 
+                    class="start-timer inline-flex items-center text-burgundy hover:text-burgundy-light transition-colors"
+                    data-duration={step.duration}
+                    data-label={`Step ${index + 1}`}
+                    data-direction={step.title}
+                  >
+                    <Icon name="heroicons-outline:clock" class="w-5 h-5 mr-1" />
+                    Set timer ({step.duration} min)
+                  </button>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- Variations -->
+        <div class="mt-12">
+          <h2 class="font-heading text-3xl text-burgundy mb-6">Variations to Try</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {technique.variations.map(variation => (
+              <div class="bg-cream rounded-xl p-6 shadow-sm">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="font-heading text-xl text-burgundy">{variation.name}</h3>
+                  <span class={`text-sm px-2 py-1 rounded-full ${
+                    variation.difficulty === 'Easy' ? 'bg-sage text-olive-dark' : 
+                    variation.difficulty === 'Intermediate' ? 'bg-chestnut text-white' : 
+                    'bg-burgundy text-white'
+                  }`}>
+                    {variation.difficulty}
+                  </span>
+                </div>
+                <p class="text-olive-dark">{variation.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timer Template -->
+  <template id="timer-template">
+    <Timer duration={0} label="" direction="" />
+  </template>
+
+  <Newsletter />
+</Layout>

@@ -1,0 +1,354 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Icon } from 'astro-icon';
+import Newsletter from '../../components/ui/Newsletter.astro';
+import WinePairing from '../../components/WinePairing.astro';
+import Timer from '../../components/Timer.astro';
+import AdUnit from '../../components/AdUnit.astro';
+
+export function getStaticPaths() {
+  return [
+    {
+      params: { slug: 'coq-au-vin' },
+      props: {
+        recipe: {
+          title: "Coq au Vin with Herbed Mashed Potatoes",
+          description: "A classic French dish of chicken braised with wine, mushrooms, and garlic. Served with creamy herbed mashed potatoes for the perfect comfort food experience.",
+          image: "https://images.pexels.com/photos/6107787/pexels-photo-6107787.jpeg",
+          cookTime: "1 hour 30 min",
+          servings: 4,
+          difficulty: "Intermediate",
+          category: "French",
+          hasVideo: true,
+          videoUrl: "https://www.youtube.com/embed/VIDEO_ID",
+          ingredients: {
+            meat: [
+              "4 chicken legs",
+              "4 bacon strips"
+            ],
+            produce: [
+              "8 oz mushrooms",
+              "6 pearl onions",
+              "4 garlic cloves",
+              "2 carrots"
+            ],
+            herbs: [
+              "Fresh thyme",
+              "2 bay leaves",
+              "Salt and pepper"
+            ],
+            liquids: [
+              "2 cups red wine"
+            ]
+          },
+          instructions: [
+            {
+              text: "Marinate chicken in wine with vegetables overnight",
+              duration: 1,
+              details: "In a large bowl, combine chicken legs, chopped vegetables, and herbs. Pour red wine over the mixture until everything is submerged. Cover and refrigerate overnight to allow flavors to develop."
+            },
+            {
+              text: "Brown bacon and set aside",
+              duration: 10,
+              details: "Cut bacon into lardons and cook in a large Dutch oven over medium heat until crispy and fat has rendered, about 8-10 minutes. Remove with a slotted spoon and set aside."
+            },
+            {
+              text: "Sear chicken until golden",
+              duration: 15,
+              details: "Remove chicken from marinade (reserve the liquid) and pat dry. In the same Dutch oven with bacon fat, sear chicken on all sides until golden brown, about 5-7 minutes per side."
+            },
+            {
+              text: "Sauté vegetables until softened",
+              duration: 8,
+              details: "Add pearl onions, carrots, and mushrooms to the pot. Sauté until vegetables begin to soften and develop color, stirring occasionally."
+            },
+            {
+              text: "Add wine marinade and bring to simmer",
+              duration: 5,
+              details: "Pour in the reserved marinade, scraping the bottom of the pot to release any browned bits. Bring to a gentle simmer."
+            },
+            {
+              text: "Return chicken to pot and cook for 1 hour",
+              duration: 60,
+              details: "Add chicken back to the pot along with the reserved bacon. Cover and simmer gently for about 1 hour or until chicken is tender and falling off the bone."
+            },
+            {
+              text: "Reduce sauce and serve",
+              duration: 10,
+              details: "Remove chicken and vegetables. Increase heat and reduce sauce until it coats the back of a spoon. Return chicken and vegetables to the pot and serve hot."
+            }
+          ],
+          winePairing: {
+            name: "Château Margaux 2015",
+            type: "Red Burgundy",
+            region: "Burgundy, France",
+            description: "A full-bodied red wine with notes of black cherry, mushroom, and earth that perfectly complements the rich flavors of Coq au Vin. The wine's high acidity cuts through the richness while its earthy notes enhance the dish's rustic character.",
+            image: "https://images.pexels.com/photos/2912108/pexels-photo-2912108.jpeg"
+          },
+          complements: [
+            {
+              title: "Crusty Baguette",
+              description: "Fresh, artisanal bread perfect for soaking up the rich sauce",
+              image: "https://images.pexels.com/photos/461060/pexels-photo-461060.jpeg",
+              time: "5 min"
+            },
+            {
+              title: "Green Salad with Dijon Vinaigrette",
+              description: "Light, crisp greens to balance the richness",
+              image: "https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg",
+              time: "10 min"
+            },
+            {
+              title: "Haricots Verts Almondine",
+              description: "Classic French green beans with toasted almonds",
+              image: "https://images.pexels.com/photos/539431/pexels-photo-539431.jpeg",
+              time: "15 min"
+            }
+          ]
+        }
+      }
+    }
+  ];
+}
+
+const { recipe } = Astro.props;
+---
+
+<Layout title={recipe.title} description={recipe.description}>
+  <article>
+    <!-- Hero Section -->
+    <div class="container mx-auto px-4 py-10">
+      <div class="relative h-[60vh] min-h-[400px] overflow-hidden rounded-2xl shadow-xl">
+        <img 
+          src={recipe.image} 
+          alt={recipe.title} 
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+          <h1 class="font-heading text-4xl md:text-5xl mb-4">{recipe.title}</h1>
+          <div class="flex flex-wrap gap-4 text-sm">
+            <span class="flex items-center">
+              <Icon name="heroicons-outline:clock" class="w-5 h-5 mr-1" />
+              {recipe.cookTime}
+            </span>
+            <span class="flex items-center">
+              <Icon name="heroicons-outline:user-group" class="w-5 h-5 mr-1" />
+              {recipe.servings} servings
+            </span>
+            <span class="flex items-center">
+              <Icon name="heroicons-outline:academic-cap" class="w-5 h-5 mr-1" />
+              {recipe.difficulty}
+            </span>
+            <span class="bg-burgundy px-3 py-1 rounded-full">
+              {recipe.category}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe Content -->
+    <div class="container mx-auto px-4">
+      <!-- Top Ad -->
+      <AdUnit type="horizontal" className="mb-12" />
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <!-- Ingredients Sidebar -->
+        <div class="lg:col-span-1">
+          <h2 class="font-heading text-3xl text-burgundy mb-8">Ingredients</h2>
+          {Object.entries(recipe.ingredients).map(([category, items]) => (
+            <div class="mb-8">
+              <h3 class="font-heading text-xl text-olive-dark capitalize mb-4">
+                {category}
+              </h3>
+              <ul class="space-y-3">
+                {items.map((ingredient) => (
+                  <li class="flex items-center text-olive-dark">
+                    <Icon name="heroicons-outline:check" class="w-5 h-5 mr-2 text-burgundy flex-shrink-0" />
+                    <span>{ingredient}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+          
+          <!-- Sidebar Ad -->
+          <AdUnit type="sidebar" className="mt-12" />
+        </div>
+
+        <!-- Instructions -->
+        <div class="lg:col-span-2">
+          <h2 class="font-heading text-3xl text-burgundy mb-8">Instructions</h2>
+          
+          {recipe.hasVideo && (
+            <div class="bg-burgundy/10 border-2 border-burgundy/20 rounded-lg p-6 mb-8 shadow-sm">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-burgundy/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Icon name="heroicons-outline:video-camera" class="w-6 h-6 text-burgundy" />
+                </div>
+                <div>
+                  <p class="text-burgundy text-lg">More of a visual learner? Me too. This recipe has a video walkthrough.</p>
+                  <button 
+                    id="openVideoModal"
+                    class="text-burgundy hover:text-burgundy-light font-medium inline-flex items-center mt-3 text-lg"
+                  >
+                    Watch Video
+                    <Icon name="heroicons-outline:play" class="w-5 h-5 ml-2" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+          
+          <ol class="space-y-8">
+            {recipe.instructions.map((step, index) => (
+              <li class="flex items-start">
+                <span class="flex-shrink-0 w-8 h-8 bg-burgundy text-white rounded-full flex items-center justify-center mr-4 mt-1">
+                  {index + 1}
+                </span>
+                <div class="flex-grow">
+                  <p class="text-olive-dark font-medium mb-2">{step.text}</p>
+                  <p class="text-olive text-sm mb-3">{step.details}</p>
+                  {step.duration && (
+                    <button 
+                      class="start-timer inline-flex items-center text-sm text-burgundy hover:text-burgundy-light transition-colors"
+                      data-duration={step.duration * 60}
+                      data-label={`Step ${index + 1}`}
+                      data-direction={step.text}
+                    >
+                      <Icon name="heroicons-outline:clock" class="w-4 h-4 mr-1" />
+                      Set timer ({step.duration} min)
+                    </button>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ol>
+          
+          <!-- Bottom Ad -->
+          <AdUnit type="horizontal" className="mt-12" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Wine Pairing Section -->
+    <div class="container mx-auto px-4 my-16">
+      <div class="bg-burgundy rounded-2xl overflow-hidden shadow-xl">
+        <WinePairing wine={recipe.winePairing} />
+      </div>
+    </div>
+
+    <!-- Complete Your Meal Section -->
+    <div class="container mx-auto px-4 mb-16">
+      <div class="p-10">
+          <div class="text-center mb-10">
+            <h2 class="font-heading text-3xl text-burgundy mb-2">Complete The Meal</h2>
+            <p class="text-olive-dark max-w-2xl mx-auto">
+              Elevate your dining experience with these perfectly paired side dishes, accompaniments, and desserts.
+            </p>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {recipe.complements.map((item) => (
+              <div class="bg-white rounded-xl overflow-hidden shadow-lg transform hover:-translate-y-1 transition-all duration-300">
+                <div class="relative aspect-[16/10]">
+                  <img 
+                    src={item.image} 
+                    alt={item.title}
+                    class="w-full h-full object-cover"
+                  />
+                  <div class="absolute top-2 right-2">
+                    <span class="bg-cream/90 backdrop-blur-sm text-burgundy text-sm px-3 py-1 rounded-full shadow-md flex items-center gap-1">
+                      <Icon name="heroicons-outline:clock" class="w-4 h-4" />
+                      {item.time}
+                    </span>
+                  </div>
+                </div>
+                <div class="p-6">
+                  <h3 class="font-heading text-xl text-burgundy mb-2">{item.title}</h3>
+                  <p class="text-olive-dark text-sm">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+    </div>
+  </article>
+
+  <!-- Video Modal -->
+  <div id="videoModal" class="fixed inset-0 bg-black/80 z-50 hidden">
+    <div class="absolute inset-6 md:inset-12 bg-white rounded-xl shadow-2xl flex flex-col">
+      <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+        <h3 class="font-heading text-xl text-burgundy">Video: {recipe.title}</h3>
+        <button id="closeVideoModal" class="text-olive hover:text-burgundy transition-colors">
+          <Icon name="heroicons-outline:x" class="w-6 h-6" />
+        </button>
+      </div>
+      <div class="flex-grow relative">
+        <iframe
+          id="videoIframe"
+          class="absolute inset-0 w-full h-full rounded-b-xl"
+          src=""
+          title={`Video tutorial for ${recipe.title}`}
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timer Template -->
+  <template id="timer-template">
+    <Timer duration={0} label="" direction="" />
+  </template>
+
+  <Newsletter />
+</Layout>
+
+<script>
+  // Video modal functionality
+  const videoModal = document.getElementById('videoModal');
+  const videoIframe = document.getElementById('videoIframe');
+  const openVideoBtn = document.getElementById('openVideoModal');
+  const closeVideoBtn = document.getElementById('closeVideoModal');
+
+  openVideoBtn?.addEventListener('click', () => {
+    if (videoModal && videoIframe) {
+      videoModal.classList.remove('hidden');
+      videoIframe.src = 'https://www.youtube.com/embed/VIDEO_ID?autoplay=1';
+      document.body.style.overflow = 'hidden';
+    }
+  });
+
+  closeVideoBtn?.addEventListener('click', () => {
+    if (videoModal && videoIframe) {
+      videoModal.classList.add('hidden');
+      videoIframe.src = '';
+      document.body.style.overflow = '';
+    }
+  });
+
+  // Close modal on background click
+  videoModal?.addEventListener('click', (e) => {
+    if (e.target === videoModal) {
+      videoModal.classList.add('hidden');
+      if (videoIframe) {
+        videoIframe.src = '';
+      }
+      document.body.style.overflow = '';
+    }
+  });
+
+  // Close modal on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && videoModal && !videoModal.classList.contains('hidden')) {
+      videoModal.classList.add('hidden');
+      if (videoIframe) {
+        videoIframe.src = '';
+      }
+      document.body.style.overflow = '';
+    }
+  });
+</script>
