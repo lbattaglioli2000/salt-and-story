@@ -12,10 +12,11 @@
   },
   "dependencies": {
     "@astrojs/tailwind": "^5.0.3",
+    "@astrojs/vercel": "^8.1.4",
     "@fontsource/lato": "^5.0.0",
     "@fontsource/playfair-display": "^5.0.0",
     "@types/node-fetch": "^2.6.12",
-    "astro": "^4.0.7",
+    "astro": "^5.8.0",
     "astro-icon": "^0.8.2",
     "dotenv": "^16.5.0",
     "node-fetch": "^3.3.2",

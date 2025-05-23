@@ -395,6 +395,7 @@ export type Entry_Recipes_Recipe = EntryInterface & {
   categories?: Maybe<Array<Maybe<TermInterface>>>;
   category: Array<Maybe<TermInterface>>;
   collection: Collection;
+  complementary_dishes?: Maybe<Array<Maybe<GridItem_ComplementaryDishes>>>;
   cook_time: Scalars['String']['output'];
   date?: Maybe<Scalars['String']['output']>;
   description: Scalars['String']['output'];
@@ -425,6 +426,7 @@ export type Entry_Recipes_Recipe = EntryInterface & {
   uri?: Maybe<Scalars['String']['output']>;
   url?: Maybe<Scalars['String']['output']>;
   video?: Maybe<Scalars['String']['output']>;
+  wine_pairings?: Maybe<Array<Maybe<Sets_WinePairings>>>;
 };
 
 
@@ -560,6 +562,13 @@ export type GridItem_CommonMistakes = {
   description: Scalars['String']['output'];
   id?: Maybe<Scalars['String']['output']>;
   mistake: Scalars['String']['output'];
+};
+
+export type GridItem_ComplementaryDishes = {
+  __typename?: 'GridItem_ComplementaryDishes';
+  id?: Maybe<Scalars['String']['output']>;
+  pairing_note?: Maybe<Scalars['String']['output']>;
+  recipe?: Maybe<EntryInterface>;
 };
 
 export type GridItem_EquipmentNeeded = {
@@ -781,6 +790,18 @@ export type Set_Steps_Step = {
   type: Scalars['String']['output'];
 };
 
+export type Set_WinePairings_Wine = {
+  __typename?: 'Set_WinePairings_Wine';
+  id?: Maybe<Scalars['String']['output']>;
+  serving_tips?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  type: Scalars['String']['output'];
+  wine_description?: Maybe<Scalars['String']['output']>;
+  wine_image?: Maybe<AssetInterface>;
+  wine_name?: Maybe<Scalars['String']['output']>;
+  wine_region?: Maybe<Scalars['String']['output']>;
+  wine_type?: Maybe<Scalars['String']['output']>;
+};
+
 export type Sets_Instructions = Set_Instructions_Step;
 
 export type Sets_ProductRecommendations = Set_ProductRecommendations_Product;
@@ -788,6 +809,8 @@ export type Sets_ProductRecommendations = Set_ProductRecommendations_Product;
 export type Sets_Retailers = Set_Retailers_Retailer;
 
 export type Sets_Steps = Set_Steps_Step;
+
+export type Sets_WinePairings = Set_WinePairings_Wine;
 
 export type Site = {
   __typename?: 'Site';
@@ -922,7 +945,7 @@ export type RecipeBySlugQueryVariables = Exact<{
 }>;
 
 
-export type RecipeBySlugQuery = { __typename?: 'Query', entry?: { __typename?: 'Entry_Categories_Category' } | { __typename?: 'Entry_Equipment_Equipment' } | { __typename?: 'Entry_Pages_Page' } | { __typename?: 'Entry_Recipes_Recipe', id: string, title: string, slug: string, description: string, cook_time: string, prep_time: string, servings?: number | null, published: boolean, featured_image: { __typename?: 'Asset_Assets', url?: string | null } | { __typename?: 'Asset_Images', url?: string | null }, difficulty: { __typename?: 'LabeledValue', value?: string | null, label?: string | null }, equipment_needed?: Array<{ __typename?: 'GridItem_EquipmentNeeded', note?: string | null, equipment?: { __typename?: 'Entry_Categories_Category', title: string, slug: string } | { __typename?: 'Entry_Equipment_Equipment', title: string, slug: string } | { __typename?: 'Entry_Pages_Page', title: string, slug: string } | { __typename?: 'Entry_Recipes_Recipe', title: string, slug: string } | { __typename?: 'Entry_Techniques_Techniques', title: string, slug: string } | null } | null> | null, ingredients?: Array<{ __typename?: 'GridItem_Ingredients', ingredient: string, amount?: string | null, unit?: string | null, notes?: string | null } | null> | null, instructions?: Array<{ __typename?: 'Set_Instructions_Step', title: string, description: string, image?: { __typename?: 'Asset_Assets', url?: string | null } | { __typename?: 'Asset_Images', url?: string | null } | null, timer?: { __typename?: 'Group_Instructions_Timer', minutes?: number | null, seconds?: number | null, notes?: string | null } | null } | null> | null, category: Array<{ __typename?: 'Term_Categories_Category', title: string, slug: string } | { __typename?: 'Term_Tags_Tag', title: string, slug: string } | null>, tags?: Array<{ __typename?: 'Term_Categories_Category', title: string, slug: string } | { __typename?: 'Term_Tags_Tag', title: string, slug: string } | null> | null } | { __typename?: 'Entry_Techniques_Techniques' } | null };
+export type RecipeBySlugQuery = { __typename?: 'Query', entry?: { __typename?: 'Entry_Categories_Category' } | { __typename?: 'Entry_Equipment_Equipment' } | { __typename?: 'Entry_Pages_Page' } | { __typename?: 'Entry_Recipes_Recipe', id: string, title: string, slug: string, description: string, cook_time: string, prep_time: string, servings?: number | null, published: boolean, featured_image: { __typename?: 'Asset_Assets', url?: string | null } | { __typename?: 'Asset_Images', url?: string | null }, difficulty: { __typename?: 'LabeledValue', value?: string | null, label?: string | null }, wine_pairings?: Array<{ __typename?: 'Set_WinePairings_Wine', wine_name?: string | null, wine_type?: string | null, wine_region?: string | null, wine_description?: string | null, wine_image?: { __typename?: 'Asset_Assets', url?: string | null } | { __typename?: 'Asset_Images', url?: string | null } | null } | null> | null, complementary_dishes?: Array<{ __typename?: 'GridItem_ComplementaryDishes', pairing_note?: string | null, recipe?: { __typename?: 'Entry_Categories_Category' } | { __typename?: 'Entry_Equipment_Equipment' } | { __typename?: 'Entry_Pages_Page' } | { __typename?: 'Entry_Recipes_Recipe', cook_time: string, prep_time: string, description: string, title: string, featured_image: { __typename?: 'Asset_Assets', url?: string | null } | { __typename?: 'Asset_Images', url?: string | null } } | { __typename?: 'Entry_Techniques_Techniques' } | null } | null> | null, equipment_needed?: Array<{ __typename?: 'GridItem_EquipmentNeeded', note?: string | null, equipment?: { __typename?: 'Entry_Categories_Category', title: string, slug: string } | { __typename?: 'Entry_Equipment_Equipment', title: string, slug: string } | { __typename?: 'Entry_Pages_Page', title: string, slug: string } | { __typename?: 'Entry_Recipes_Recipe', title: string, slug: string } | { __typename?: 'Entry_Techniques_Techniques', title: string, slug: string } | null } | null> | null, ingredients?: Array<{ __typename?: 'GridItem_Ingredients', amount?: string | null, unit?: string | null, notes?: string | null, ingredient: string } | null> | null, instructions?: Array<{ __typename?: 'Set_Instructions_Step', title: string, description: string, image?: { __typename?: 'Asset_Assets', url?: string | null } | { __typename?: 'Asset_Images', url?: string | null } | null, timer?: { __typename?: 'Group_Instructions_Timer', minutes?: number | null, seconds?: number | null, notes?: string | null } | null } | null> | null, category: Array<{ __typename?: 'Term_Categories_Category', title: string, slug: string } | { __typename?: 'Term_Tags_Tag', title: string, slug: string } | null>, tags?: Array<{ __typename?: 'Term_Categories_Category', title: string, slug: string } | { __typename?: 'Term_Tags_Tag', title: string, slug: string } | null> | null } | { __typename?: 'Entry_Techniques_Techniques' } | null };
 
 export type SiteSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1065,6 +1088,31 @@ export const RecipeBySlugDocument = gql`
         value
         label
       }
+      wine_pairings {
+        ... on Set_WinePairings_Wine {
+          wine_name
+          wine_type
+          wine_region
+          wine_description
+          wine_image {
+            url
+          }
+        }
+      }
+      complementary_dishes {
+        pairing_note
+        recipe {
+          ... on Entry_Recipes_Recipe {
+            cook_time
+            prep_time
+            description
+            title
+            featured_image {
+              url
+            }
+          }
+        }
+      }
       equipment_needed {
         equipment {
           title
@@ -1073,10 +1121,10 @@ export const RecipeBySlugDocument = gql`
         note
       }
       ingredients {
-        ingredient
         amount
         unit
         notes
+        ingredient
       }
       instructions {
         ... on Set_Instructions_Step {
