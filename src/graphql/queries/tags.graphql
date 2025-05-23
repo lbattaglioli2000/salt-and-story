@@ -1,0 +1,13 @@
+# All Tags
+query AllTags {
+  terms(taxonomy: ["tags"]) {
+    data {
+      ... on Term_Tags_Tag {
+        id
+        title
+        slug
+        description
+      }
+    }
+  }
+} 

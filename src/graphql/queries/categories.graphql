@@ -1,0 +1,13 @@
+# All Categories
+query AllCategories {
+  terms(taxonomy: ["categories"]) {
+    data {
+      ... on Term_Categories_Category {
+        id
+        title
+        slug
+        content
+      }
+    }
+  }
+} 

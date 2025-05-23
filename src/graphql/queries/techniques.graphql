@@ -1,0 +1,27 @@
+# All Techniques
+query AllTechniques($page: Int = 1, $limit: Int = 10) {
+  entries(collection: ["techniques"], page: $page, limit: $limit) {
+    data {
+      ... on Entry_Techniques_Techniques {
+        id
+        title
+        slug
+        description
+        image { url }
+        difficulty_level { value label }
+        duration
+        steps {
+          ... on Set_Steps_Step {
+            title
+            description
+            image { url }
+            timer
+            pro_tips
+          }
+        }
+        categories { title slug }
+        tags { title slug }
+      }
+    }
+  }
+} 

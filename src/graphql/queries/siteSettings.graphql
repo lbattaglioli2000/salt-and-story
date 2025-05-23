@@ -1,0 +1,15 @@
+# Global Site Settings
+query SiteSettings {
+  globalSet(handle: "site_settings") {
+    ... on GlobalSet_SiteSettings {
+      site_name
+      site_description
+      logo { url }
+      favicon { url }
+      social_media_links { platform { value label } url }
+      email
+      phone
+      address
+    }
+  }
+} 

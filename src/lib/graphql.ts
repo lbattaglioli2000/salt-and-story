@@ -1,18 +1,33 @@
 import { GraphQLClient } from 'graphql-request';
+import { getSdk } from '../graphql/generated/graphql';
 
-const STATAMIC_API_URL = import.meta.env.PUBLIC_STATAMIC_API_URL;
-const STATAMIC_API_TOKEN = import.meta.env.STATAMIC_API_TOKEN;
+console.log('Initializing GraphQL client...');
 
-if (!STATAMIC_API_URL) {
-  throw new Error('PUBLIC_STATAMIC_API_URL environment variable is not set');
-}
-
-if (!STATAMIC_API_TOKEN) {
-  throw new Error('STATAMIC_API_TOKEN environment variable is not set');
-}
-
-export const graphqlClient = new GraphQLClient(STATAMIC_API_URL, {
-  headers: {
-    Authorization: `Bearer ${STATAMIC_API_TOKEN}`,
+const client = new GraphQLClient("https://salt-and-story.laravel.cloud/graphql", {
+  requestMiddleware: (request) => {
+    console.log('GraphQL Request:', request);
+    return request;
   },
-}); 
+  responseMiddleware: (response) => {
+    console.log('GraphQL Response:', response);
+    return response;
+  }
+});
+
+// Test the client immediately
+client.request(`
+  query Test {
+    __schema {
+      types {
+        name
+      }
+    }
+  }
+`).then(result => {
+  console.log('Test query successful:', result);
+}).catch(error => {
+  console.error('Test query failed:', error);
+});
+
+export const graphqlClient = client;
+export const sdk = getSdk(graphqlClient); 

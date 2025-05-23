@@ -1,39 +1,56 @@
-query GetFeaturedRecipe {
-  featuredRecipe {
-    title
-    description
-    image
-    slug
-    cookTime
-    difficulty
-    category {
-      name
-      slug
+# All Recipes
+query AllRecipes($page: Int = 1, $limit: Int = 10) {
+  entries(collection: ["recipes"], page: $page, limit: $limit) {
+    data {
+      ... on Entry_Recipes_Recipe {
+        id
+        title
+        slug
+        description
+        featured_image { url }
+        cook_time
+        prep_time
+        servings
+        difficulty { value label }
+        category { title slug }
+        tags { title slug }
+        published
+      }
     }
+    total
+    per_page
+    current_page
+    last_page
+    has_more_pages
   }
 }
 
-query GetLatestRecipes($limit: Int = 6) {
-  recipes(limit: $limit) {
-    title
-    description
-    image
-    slug
-    cookTime
-    difficulty
-    category {
-      name
+# Single Recipe by Slug
+query RecipeBySlug($slug: String!) {
+  entry(collection: "recipes", slug: $slug) {
+    ... on Entry_Recipes_Recipe {
+      id
+      title
       slug
+      description
+      featured_image { url }
+      cook_time
+      prep_time
+      servings
+      difficulty { value label }
+      equipment_needed { equipment { title slug } note }
+      ingredients { ingredient amount unit notes }
+      instructions {
+        ... on Set_Instructions_Step {
+          title
+          description
+          image { url }
+          timer { minutes seconds notes }
+        }
+      }
+      category { title slug }
+      tags { title slug }
+      published
     }
-  }
-}
-
-query GetRecipeCategories {
-  categories {
-    name
-    slug
-    description
-    image
-    recipeCount
   }
 } 

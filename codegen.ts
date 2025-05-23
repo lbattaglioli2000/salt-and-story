@@ -2,26 +2,22 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   schema: {
-    'https://your-statamic-cms-url/graphql': {
-      headers: {
-        // Add your Statamic API token here
-        Authorization: 'Bearer YOUR_API_TOKEN',
-      },
-    },
+    'https://salt-and-story.laravel.cloud/graphql': {},
   },
   documents: ['src/graphql/**/*.graphql'],
   generates: {
-    './src/graphql/generated/': {
-      preset: 'client',
+    './src/graphql/generated/graphql.ts': {
       plugins: [
         'typescript',
         'typescript-operations',
-        'typescript-graphql-request',
+        {
+          'typescript-graphql-request': {
+            rawRequest: true,
+            dedupeFragments: true,
+            useTypeImports: true
+          }
+        }
       ],
-      config: {
-        rawRequest: true,
-        dedupeFragments: true,
-      },
     },
   },
 };

@@ -2,66 +2,36 @@
 import Layout from '../../layouts/Layout.astro';
 import RecipeCard from '../../components/ui/RecipeCard.astro';
 import { Icon } from 'astro-icon';
+import { sdk } from '../../lib/graphql';
+import type { Entry_Recipes_Recipe } from '../../graphql/generated/graphql';
 
-// Sample data - in a real app, this would come from a CMS or API
-const recipes = [
-  {
-    title: "Coq au Vin with Herbed Mashed Potatoes",
-    image: "https://images.pexels.com/photos/6107787/pexels-photo-6107787.jpeg",
-    slug: "coq-au-vin",
-    cookTime: "1 hour 30 min",
-    category: "French"
-  },
-  {
-    title: "Tarte Tatin with Vanilla Crème Fraîche",
-    image: "https://images.pexels.com/photos/6546031/pexels-photo-6546031.jpeg",
-    slug: "tarte-tatin",
-    cookTime: "45 min",
-    category: "Dessert"
-  },
-  {
-    title: "Pan-Seared Scallops with Lemon Beurre Blanc",
-    image: "https://images.pexels.com/photos/1998920/pexels-photo-1998920.jpeg",
-    slug: "seared-scallops",
-    cookTime: "25 min",
-    category: "Seafood"
-  },
-  {
-    title: "Ratatouille Provençal",
-    image: "https://images.pexels.com/photos/2611818/pexels-photo-2611818.jpeg",
-    slug: "ratatouille",
-    cookTime: "1 hour",
-    category: "Vegetarian"
-  },
-  {
-    title: "Classic French Onion Soup",
-    image: "https://images.pexels.com/photos/539451/pexels-photo-539451.jpeg",
-    slug: "french-onion-soup",
-    cookTime: "1 hour 15 min",
-    category: "Soup"
-  },
-  {
-    title: "Beef Bourguignon",
-    image: "https://images.pexels.com/photos/5966141/pexels-photo-5966141.jpeg",
-    slug: "beef-bourguignon",
-    cookTime: "3 hours",
-    category: "French"
-  },
-  {
-    title: "Chocolate Soufflé",
-    image: "https://images.pexels.com/photos/4686962/pexels-photo-4686962.jpeg",
-    slug: "chocolate-souffle",
-    cookTime: "40 min",
-    category: "Dessert"
-  },
-  {
-    title: "Croque Monsieur",
-    image: "https://images.pexels.com/photos/15564188/pexels-photo-15564188/free-photo-of-a-sandwich-on-a-wooden-board.jpeg",
-    slug: "croque-monsieur",
-    cookTime: "20 min",
-    category: "Breakfast"
-  }
-];
+interface Recipe {
+  title: string;
+  image: string;
+  slug: string;
+  cookTime: string;
+  category: string;
+}
+
+let recipes: Recipe[] = [];
+let error: Error | null = null;
+
+try {
+  const { data } = await sdk.AllRecipes({ page: 1, limit: 10 });
+  recipes = data?.entries?.data
+    .map((recipe) => {
+      const r = recipe as Entry_Recipes_Recipe;
+      return {
+        title: r.title,
+        image: r.featured_image?.url || '',
+        slug: r.slug,
+        cookTime: r.cook_time,
+        category: r.category?.[0]?.title || 'Uncategorized'
+      };
+    }) || [];
+} catch (e) {
+  error = e instanceof Error ? e : new Error(String(e));
+}
 
 const categories = [
   "All", "French", "Italian", "Dessert", "Seafood", "Vegetarian", "Soup", "Breakfast"
@@ -69,6 +39,13 @@ const categories = [
 ---
 
 <Layout title="Recipes" description="Browse our collection of delicious recipes from classic French cuisine to modern interpretations and seasonal specialties.">
+  {error && (
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+      <strong class="font-bold">Error!</strong>
+      <span class="block sm:inline"> {error.message}</span>
+    </div>
+  )}
+  
   <div class="bg-olive-light/20 py-12">
     <div class="container mx-auto px-4">
       <h1 class="font-heading text-4xl text-burgundy mb-4">Recipes</h1>
